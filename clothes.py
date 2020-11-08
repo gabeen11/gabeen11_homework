@@ -1,4 +1,22 @@
-# 기온별 옷차림
+#네이버 날씨 크롤링
+from urllib.request import urlopen, Request
+import urllib
+import bs4
+
+location = input("지역을 입력하세요(ex:ㅁㅁ동) >> ")
+enc_location = urllib.parse.quote(location + '+ 날씨')
+
+url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=" + enc_location
+
+req = Request(url)
+page = urlopen(req)
+html = page.read()
+soup = bs4.BeautifulSoup(html,"html.parser")
+print("현재 " + location + "날씨는 " + soup.find("p", class_="info_temperature").find("span", class_="todaytemp").text + "도 입니다.")
+
+
+
+# 기온별 옷차림 정보
 temperature = float(input("기온을 입력하세요 >> "))
 
 if temperature <= 4:
